@@ -4,7 +4,6 @@ import pyvista as pv
 
 # --- 1. Read ----------------------------------------------------------
 
-cutLocation = 24.0
 mesh = pv.read("postProcess/U_100000.vts")
 nx, ny, nz = mesh.dimensions
 print(f"dims: {nx} x {ny} x {nz}  ({nx*ny*nz/1e6:.1f}M points)")
@@ -25,7 +24,9 @@ print(f"z range: {z[0]:.3f} .. {z[-1]:.3f}")
 # Expected: 0..48, 0..48, 0..208. If these are wrong, the storage
 # ordering is different — report the values and we can adjust.
 
-# --- 3. Locate the slice at x = 24 -----------------------------------
+# --- 3. Locate the slice ----------------------------------------------
+
+cutLocation = 0.5 * (x[0] + x[-1])
 i0 = int(np.argmin(np.abs(x - cutLocation)))
 print(f"slice index i0 = {i0}  (x = {x[i0]})")
 
